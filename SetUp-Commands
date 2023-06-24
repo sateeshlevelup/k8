@@ -1,0 +1,108 @@
+ clear
+    2  sudo apt update
+    3  clear
+    4  hostname
+    5  sudo hostnamectl set-hostname "master.example.net"
+    6  exec bash
+    7  hostname
+    8  sudo vi /etc/hosts
+    9  sudo apt install net-tools
+   10  clear
+   11  ifconfig
+   12  sudo vi /etc/hosts
+   13  sudo swapoff -a
+   14  sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+   15  sudo tee /etc/modules-load.d/containerd.conf <<EOF
+overlay
+br_netfilter
+EOF
+
+   16  sudo modprobe overlay
+   17  sudo modprobe br_netfilter
+   18  sudo apt install -y curl gnupg2 software-properties-common apt-transport-https ca-certificates
+   19  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+   20  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+   21  clear
+   22  sudo apt update
+   23  sudo apt install -y containerd.io
+   24  containerd config default | sudo tee /etc/containerd/config.toml >/dev/null 2>&1
+   25  sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+   26  sudo systemctl restart containerd
+   27  sudo systemctl enable containerd
+   28  curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+   29  sudo apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+   30  sudo apt update
+   31  sudo apt install -y kubelet kubeadm kubectl
+   32  sudo apt-mark hold kubelet kubeadm kubectl
+   33  clear
+   34  sudo kubeadm init --control-plane-endpoint=master.example.net
+   35  
+   36  sudo kubeadm init --control-plane-endpoint=master.example.net --ignore-preflight-errors=FileContent--proc-sys-net-ipv4-ip_forward
+   37  
+   38  clear
+   
+   40  kubectl get nodes
+   41  kubectl apply -f  https://docs.projectcalico.org/v3.8/manifests/calico.yaml
+   42  clear
+   43 
+   50  sudo kubectl get nodes -o wide
+   51*
+   52  kubectl get nodes
+   53  ls
+   54 
+   57  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
+   58  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+   59  watch kubectl get pods -n calico-system
+   60  clear
+   61  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+   62  sudo kubectl get nodes
+   63  sudo kubectl get node
+   64  clear
+   65  kubectl get node
+   66  kubectl get node -o wide
+   67  clear
+   68  kubectl get node
+   69  kubectl get nodes -o wide
+   70  kubectl get all
+   71  clear
+   72  kubectl get pods --all-namespaces
+   73  clear
+   74  kubectl get pods --all-namespaces
+   75  kubectl cluster-info
+   76  kubectl get pods
+   77  kubectl run nginx --image=nginx
+   78  kubectl get pods
+   79  kubectl run levelup --image=python
+   80  kubectl get pods
+   81  kubectl get pods -o wide
+   82  clear
+   83  kubectl get pods -o wide
+   84*
+   85  kubectl logs nginx
+   86  kubectl exec -it nginx bash
+   87  kubectl get pods -o wide
+   88  clear
+   89  kubectl get pods -o wide
+   90  curl 192.168.146.1:80
+   91  clear
+   92  kubectl get pods -o wide
+   93  kubectl delete pod levelup
+   94  kubectl get pods
+   95  kubectl get events
+   96  clear
+   97  kubectl describe pod nginx
+   98  kubectl --help
+   99  clear
+  100  mkdir levelup
+  101  cd levelup
+  102  vi demo.yaml
+  103  pwd
+  104  ls
+  105  cat demo.yaml
+  106  kubectl get pods
+  107  kubectl create -f demo.yaml
+  108  vi demo.yaml
+  109  kubectl create -f demo.yaml
+  110  kubectl get pods
+  111  kubectl explain pod
+  112  history
