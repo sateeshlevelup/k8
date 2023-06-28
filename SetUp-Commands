@@ -6,6 +6,12 @@
     6  exec bash
     7  hostname
     8  sudo vi /etc/hosts
+        Add entries as below:-
+        < privata IP >   master.example.net
+       < privata IP > worker-01.example.net
+        < privat IP >   worker-02.example.net
+ 
+
     9  sudo apt install net-tools
    10  clear
    11  ifconfig
