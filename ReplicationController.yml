@@ -16,3 +16,5 @@ spec:
      containers: 
       - name : ubuntu
         image : ubuntu
+ Replicas :3       
+        
