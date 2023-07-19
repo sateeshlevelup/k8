@@ -1,0 +1,21 @@
+apiversion: v1 
+kind: ReplicaSet
+metadata:  
+ name: myapp 
+ lable:
+  app: myapp
+  type:front-end
+spec:
+ template: 
+    metadata:  
+    name: myapp 
+    lable:
+      app:myapp
+      type:front-end
+    spec:
+     containers: 
+      - name : ubuntu
+        image : ubuntu
+ Replicas :3
+ Selectors:
+  matchlables:frontend
